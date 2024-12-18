@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'articubot_one_ui'
+package_name = 'raptor_v2_ui'
 
 setup(
     name=package_name,
@@ -20,9 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'play_face = articubot_one_ui.play_face:main',
-            'play_face_cars = articubot_one_ui.play_face_cars:main',
-            'ui_node = articubot_one_ui.ui_node:main',
+            'play_face = raptor_v2_ui.play_face:main',
+            'play_face_cars = raptor_v2_ui.play_face_cars:main',
+            'ui_node = raptor_v2_ui.ui_node:main',
         ],
         
     },

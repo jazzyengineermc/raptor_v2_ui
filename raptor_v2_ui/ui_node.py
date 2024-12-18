@@ -56,11 +56,12 @@ class UiNode(Node):
         # Build UI
 
         self.ttk = Tk()
-        self.ttk.title("Bot UI")
+        self.ttk.title("Raptor UI")
         self.ttk.geometry("1024x600+0+0")
 
         if self.fullscreen:
             self.ttk.bind("<Escape>", self.end_fullscreen)
+            self.ttk.bind("<f>", self.goto_fullscreen)
             self.ttk.attributes("-fullscreen",True)
 
         if self.disable_cursor:
@@ -83,12 +84,14 @@ class UiNode(Node):
         else:
             print("start_motor not ready!")
 
+
     def send_stop_motor_req(self):
         if self.motor_stop.service_is_ready():
             print("Stopping lidar...")
             self.client_futures.append(self.motor_stop.call_async(self.motor_req))
         else:
             print("stop_motor not ready!")
+
 
     def do_nothing_cb(self):
         print("Doing nothing!")
@@ -99,7 +102,7 @@ class UiNode(Node):
             self.button_page.process_joy(joy_vals)
 
         if self.face_page and not self.use_cmd_vel_for_face:
-            self.face_page.update_values(joy_vals.axes[0], abs(joy_vals.axes[1]))
+            self.face_page.update_values(joy_vals.axes[3], abs(joy_vals.axes[1]))
 
         if self.button_page and joy_vals.buttons[8]:
             self.destroy_button_page()
@@ -110,12 +113,14 @@ class UiNode(Node):
             self.build_button_page()
         return
 
+
     def cmd_vel_callback(self, cmd_vel):
 
         if self.face_page and self.use_cmd_vel_for_face:
             self.face_page.update_values(cmd_vel.angular.z/1.0, abs(cmd_vel.linear.x/1.0))
 
         return
+
 
     def update_image(self):
 
@@ -132,6 +137,12 @@ class UiNode(Node):
         self.ttk.attributes("-fullscreen", False)
         return "break"
 
+
+    def goto_fullscreen(self, event=None):
+        self.ttk.attributes("-fullscreen", True)
+        return "break"
+
+
     def build_button_page(self):
         self.button_page = ButtonPage(self.ttk)
         self.button_page.assign_button(self.button_page.b1, 4, "Y: Thing 1", self.do_nothing_cb)
@@ -139,12 +150,15 @@ class UiNode(Node):
         self.button_page.assign_button(self.button_page.b3, 1, "B: Stop Lidar", self.send_stop_motor_req)
         self.button_page.assign_button(self.button_page.b4, 0, "A: Start Lidar", self.send_start_motor_req)
 
+
     def destroy_button_page(self):
         self.button_page.destroy()
         self.button_page = None
 
+
     def build_face_page(self):
         self.face_page = FacePlayerCars(self.ttk)
+
 
     def destroy_face_page(self):
         self.face_page.destroy()

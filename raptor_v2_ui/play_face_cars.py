@@ -56,11 +56,12 @@ class FacePlayerCars():
 
 
 
-        self.col_a = "#ff7b00"
+        self.col_a = "#ff0000"
         self.col_b = "#a65000"
 
         # Create eyes
-        iris_colour = "deepskyblue2"
+        #iris_colour = "deepskyblue2"
+        iris_colour = "#00ff00"
 
 
 
