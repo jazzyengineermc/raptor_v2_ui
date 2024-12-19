@@ -7,8 +7,8 @@ from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
 from std_srvs.srv import Empty
 
-from articubot_one_ui.play_face_cars import FacePlayerCars
-from articubot_one_ui.button_page import ButtonPage
+from raptor_v2_ui.play_face_cars import FacePlayerCars
+from raptor_v2_ui.button_page import ButtonPage
 
 
 class UiNode(Node):
