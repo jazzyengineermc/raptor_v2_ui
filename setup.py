@@ -23,6 +23,7 @@ setup(
             'play_face = raptor_v2_ui.play_face:main',
             'play_face_cars = raptor_v2_ui.play_face_cars:main',
             'ui_node = raptor_v2_ui.ui_node:main',
+            'raptor_eyes = raptor_v2_ui.raptor_eyes:main'
         ],
         
     },

@@ -7,8 +7,8 @@ from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
 from std_srvs.srv import Empty
 
-from raptor_v2_ui.play_face_cars import FacePlayerCars
-from raptor_v2_ui.button_page import ButtonPage
+from play_face_cars import FacePlayerCars
+from button_page import ButtonPage
 
 
 class UiNode(Node):
@@ -19,7 +19,7 @@ class UiNode(Node):
 
         # Configuration
 
-        self.use_cmd_vel_for_face = True
+        self.use_cmd_vel_for_face = False
         self.disable_cursor = True
         self.fullscreen = False
 
@@ -33,22 +33,22 @@ class UiNode(Node):
             10)
         self.joy_sub  # prevent unused variable warning
 
-        self.cmd_sub = self.create_subscription(
-            Twist,
-            'cmd_vel',
-            self.cmd_vel_callback,
-            10)
-        self.cmd_sub  # prevent unused variable warning
+        #self.cmd_sub = self.create_subscription(
+        #    Twist,
+        #    'cmd_vel',
+        #    self.cmd_vel_callback,
+        #    10)
+        #self.cmd_sub  # prevent unused variable warning
 
-        self.motor_start = self.create_client(Empty, 'start_motor')
-        if not self.motor_start.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('WARNING: start_motor service not available')
+        # self.motor_start = self.create_client(Empty, 'start_motor')
+        # if not self.motor_start.wait_for_service(timeout_sec=1.0):
+        #     self.get_logger().info('WARNING: start_motor service not available')
 
-        self.motor_stop = self.create_client(Empty, 'stop_motor')
-        if not self.motor_stop.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('WARNING: stop_motor service not available')
+        # self.motor_stop = self.create_client(Empty, 'stop_motor')
+        # if not self.motor_stop.wait_for_service(timeout_sec=1.0):
+        #     self.get_logger().info('WARNING: stop_motor service not available')
         
-        self.motor_req = Empty.Request()
+        # self.motor_req = Empty.Request()
 
         self.client_futures = []
 
@@ -190,7 +190,7 @@ def main(args=None):
         rclpy.spin_once(ui_node)
         ui_node.check_for_finished_calls()
         ui_node.update_image()
-        time.sleep(0.01)
+        time.sleep(0.1)
 
     ui_node.destroy_node()
     rclpy.shutdown()
